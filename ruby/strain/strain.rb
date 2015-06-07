@@ -1,26 +1,26 @@
 # Array strainer
 class Array
   def keep
-    return [] if empty?
+    return to_enum(:each) unless block_given?
 
-    return self unless block_given?
-
-    result = []
-
-    each { |x| result << x if yield x }
-
-    result
+    inject([]) do |acc, x|
+      if yield x
+        acc << x
+      else
+        acc
+      end
+    end
   end
 
   def discard
-    return [] if empty?
+    return to_enum(:each) unless block_given?
 
-    return self unless block_given?
-
-    result = []
-
-    each { |x| result << x unless yield x }
-
-    result
+    inject([]) do |acc, x|
+      if yield x
+        acc
+      else
+        acc << x
+      end
+    end
   end
 end
