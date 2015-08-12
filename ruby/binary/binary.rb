@@ -5,13 +5,11 @@ class Binary
   end
 
   def to_decimal
-    if @str !~ /^[01]+$/
-      0
-    else
-      len = @str.length - 1
-      @str.chars.each_with_index.inject(0) do |acc, (x, i)|
-        acc + x.to_i * 2**(len - i)
-      end
+    return 0 unless @str =~ /^[01]+$/
+    len = @str.length - 1
+
+    @str.each_char.with_index.inject(0) do |acc, (x, i)|
+      acc + x.to_i * 2**(len - i)
     end
   end
 end
