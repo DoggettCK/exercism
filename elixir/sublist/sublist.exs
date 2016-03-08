@@ -13,10 +13,8 @@ defmodule Sublist do
   end
 
   defp equal?([], []), do: true
-  defp equal?(_, []), do: false
-  defp equal?([], _), do: false
   defp equal?([h | t1], [h | t2]), do: equal?(t1, t2)
-  defp equal?([_ | _], [_ | _]), do: false
+  defp equal?(_, _), do: false
 
   defp contains?(_, []), do: true
   defp contains?([], _), do: false
