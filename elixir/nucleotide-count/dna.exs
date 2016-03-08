@@ -12,11 +12,14 @@ defmodule DNA do
   iex> DNA.count('AATAA', ?T)
   1
   """
-  @spec count([char], char) :: non_neg_integer
-  def count(strand, nucleotide) do
-
+  for nucleotide <- @nucleotides do
+    @spec count([char], char) :: non_neg_integer
+    def count(strand, unquote(nucleotide)) do
+      strand |> histogram |> Dict.get(unquote(nucleotide), 0)
+    end
   end
 
+  def count(strand, _), do: raise ArgumentError
 
   @doc """
   Returns a summary of counts by nucleotide.
@@ -28,6 +31,18 @@ defmodule DNA do
   """
   @spec histogram([char]) :: Map
   def histogram(strand) do
+    counts = @nucleotides |> Enum.zip([0] |> Stream.cycle) |> Enum.into(%{})
 
+    strand
+    |> to_char_list
+    |> Enum.reduce(counts, &update_nucleotide_count/2)
   end
+
+  for char <- @nucleotides do
+    defp update_nucleotide_count(unquote(char), acc) do
+      acc |> Map.update(unquote(char), 1, &(&1 + 1))
+    end
+  end
+
+  defp update_nucleotide_count(char, acc), do: raise ArgumentError
 end
