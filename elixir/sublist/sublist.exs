@@ -5,9 +5,9 @@ defmodule Sublist do
   """
   def compare(a, b) do
     cond do
-      a |> equal?(b) -> :equal
-      b |> contains?(a) -> :sublist
-      a |> contains?(b) -> :superlist
+      equal?(a, b) -> :equal
+      contains?(b, a) -> :sublist
+      contains?(a, b) -> :superlist
       true -> :unequal
     end
   end
@@ -15,7 +15,7 @@ defmodule Sublist do
   defp equal?([], []), do: true
   defp equal?(_, []), do: false
   defp equal?([], _), do: false
-  defp equal?([h | t1], [h | t2]), do: t1 |> equal?(t2)
+  defp equal?([h | t1], [h | t2]), do: equal?(t1, t2)
   defp equal?([_ | _], [_ | _]), do: false
 
   defp contains?(_, []), do: true
@@ -25,8 +25,8 @@ defmodule Sublist do
       one
       |> Enum.take(Enum.count(two))
       |> equal?(two) -> true
-      true -> t1 |> contains?(two)
+      true -> contains?(t1, two)
     end
   end
-  defp contains?([_ | t1], l2), do: t1 |> contains?(l2)
+  defp contains?([_ | t1], l2), do: contains?(t1, l2)
 end
