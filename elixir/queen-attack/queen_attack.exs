@@ -8,7 +8,6 @@ defmodule Queens do
   Creates a new set of Queens
   """
   @spec new(nil | list) :: Queens.t()
-  def new([white: white, black: white]), do: raise ArgumentError
   def new(positions \\ nil) do
     default = struct(Queens, @default_positions)
     queens = struct(default, positions || [])
