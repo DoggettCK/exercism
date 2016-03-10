@@ -1,5 +1,5 @@
 defmodule Atbash do
-  for {p, c} <- ?a..?z |> Enum.zip(?z..?a) do
+  for {p, c} <- Enum.zip(?a..?z, ?z..?a) do
     defp encode_char(unquote(p)), do: unquote(c)
   end
 
@@ -21,8 +21,6 @@ defmodule Atbash do
     |> to_char_list
     |> Enum.map(&encode_char/1)
     |> Enum.chunk(5, 5, [""])
-    |> Enum.map(&to_string/1)
-    |> Enum.join(" ")
-  
+    |> Enum.map_join(" ", &to_string/1)
   end
 end
