@@ -16,12 +16,12 @@ defmodule Anagram do
     clean_base = base |> clean
     clean_head = head |> clean
 
-    cond do
-      clean_base === clean_head -> results 
-      (clean_base |> sort) === (clean_head |> sort) -> [head | results]
-      true -> results
-    end
+    anagram?(base, head, clean_base, clean_head, clean_base |> sort, clean_head |> sort, results)
   end
+
+  defp anagram?(_, _, clean_base, clean_head, _, _, results)  when clean_base === clean_head, do: results
+  defp anagram?(_, head, _, _, sorted_clean_base, sorted_clean_head, results) when sorted_clean_base === sorted_clean_head, do: [head | results]
+  defp anagram?(_, _, _, _, _, _, results), do: results
 
   defp clean(string) when is_binary(string) do
     string

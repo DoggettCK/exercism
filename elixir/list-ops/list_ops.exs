@@ -24,7 +24,9 @@ defmodule ListOps do
   @spec filter(list, (any -> as_boolean(term))) :: list
   def filter(l, f), do: filter(l, f, [])
   defp filter([], _, acc), do: reverse(acc)
-  defp filter([head | tail], f, acc), do: filter(tail, f, (if apply(f, [head]), do: [head | acc], else: acc))
+  defp filter([head | tail], f, acc), do: filter([head | tail], f, acc, apply(f, [head]))
+  defp filter([head | tail], f, acc, true), do: filter(tail, f, [head | acc])
+  defp filter([head | tail], f, acc, false), do: filter(tail, f, acc)
 
   @type acc :: any
   @spec reduce(list, acc, ((any, acc) -> acc)) :: acc

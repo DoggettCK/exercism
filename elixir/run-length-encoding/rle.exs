@@ -34,14 +34,9 @@ defmodule RunLengthEncoder do
 
   defp decode("", result), do: result
   
-  defp decode(string, result) do
-    case Integer.parse(string) do
-      {count, <<char::binary-size(1)>> <> rest} ->
-        decode(rest, result <> decode_count(count, char))
-      :error ->
-        "Invalid string"
-    end
-  end
+  defp decode(:error, _), do: "Invalid string"
+  defp decode({count, <<char::binary-size(1)>> <> rest}, result), do: decode(rest, result <> decode_count(count, char))
+  defp decode(string, result) when is_binary(string), do: decode(Integer.parse(string), result)
 
   defp decode_count(0, _), do: ""
   defp decode_count(count, char) do

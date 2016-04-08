@@ -9,15 +9,14 @@ defmodule Queens do
   """
   @spec new(nil | list) :: Queens.t()
   def new(positions \\ nil) do
-    default = struct(Queens, @default_positions)
-    queens = struct(default, positions || [])
-
-    if queens.black == queens.white do
-      raise ArgumentError
-    end
-
-    queens
+    Queens
+    |> struct(@default_positions)
+    |> struct(positions || [])
+    |> valid_queens
   end
+
+  defp valid_queens(%Queens{black: black, white: black}), do: raise ArgumentError
+  defp valid_queens(%Queens{} = queens), do: queens
 
   @doc """
   Gives a string reprentation of the board with

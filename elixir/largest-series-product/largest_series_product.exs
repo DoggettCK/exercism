@@ -7,9 +7,9 @@ defmodule Series do
   def largest_product(_, 0), do: 1
   def largest_product("", _), do: raise ArgumentError
   def largest_product(_, size) when size < 0, do: raise ArgumentError
-  def largest_product(number_string, size) do
-    if size > String.length(number_string), do: raise ArgumentError
-
+  def largest_product(number_string, size), do: largest_product(number_string, size, String.length(number_string))
+  defp largest_product(number_string, size, string_size) when size > string_size, do: raise ArgumentError
+  defp largest_product(number_string, size, string_size) do
     number_string
     |> String.split("", trim: true)
     |> Enum.map(&String.to_integer/1)

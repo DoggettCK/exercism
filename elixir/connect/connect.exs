@@ -59,12 +59,15 @@ defmodule Connect do
   def result_for(["O"]), do: :white
   def result_for(["X"]), do: :black
   def result_for(board) do
-    cond do
-      board |> clean(:white) |> board_size |> winner?(:white) -> :white
-      board |> clean(:black) |> transpose |> board_size |> winner?(:black) -> :black
-      true -> :none
-    end
+    white_wins = board |> clean(:white) |> board_size |> winner?(:white)
+    black_wins = board |> clean(:black) |> transpose |> board_size |> winner?(:black)
+
+    result_for(white_wins, black_wins)
   end
+
+  defp result_for(true, _), do: :white
+  defp result_for(_, true), do: :black
+  defp result_for(_, _), do: :none
 
   defp winner?({board, cols, rows}, color) do
     n = cols * rows
