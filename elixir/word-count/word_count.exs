@@ -7,10 +7,10 @@ defmodule Words do
   @spec count(String.t) :: map()
   def count(sentence) do
     sentence
+    |> String.downcase
     |> String.split(~r/[!@%$^&* _,:]+/, trim: true)
-    |> Enum.map(&String.downcase/1)
     |> Enum.reduce(%{}, &increment_word_count/2)
   end
 
-  defp increment_word_count(word, acc), do: Dict.update(acc, word, 1, &(&1 + 1))
+  defp increment_word_count(word, acc), do: Map.update(acc, word, 1, &(&1 + 1))
 end
