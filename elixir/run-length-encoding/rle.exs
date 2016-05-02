@@ -6,28 +6,16 @@ defmodule RunLengthEncoder do
   It should also be able to reconstruct the data into its original form. 
   "1H1O1R1S1E" => "HORSE" 
   """
-  @spec encode(string) :: String.t
+  @spec encode(str :: String.t) :: String.t
   def encode(string) do
-    encode(string, "", 0, "")
+    string
+    |> String.to_char_list
+    |> Enum.chunk_by(fn x -> x end)
+    |> Enum.map(fn x -> {length(x), Enum.take(x, 1)} end)
+    |> Enum.reduce("", fn {count, char}, acc -> acc <> "#{count}#{char}" end)
   end
 
-  defp encode("", "", 0, _), do: ""
-  defp encode("", prev, count, result) do
-    result <> encode_count(count, prev)
-  end
-
-  defp encode(<<prev::binary-size(1)>> <> rest, prev, count, result) do
-    encode(rest, prev, count + 1, result)
-  end
-
-  defp encode(<<new::binary-size(1)>> <> rest, prev, count, result) do
-    encode(rest, new, 1, result <> encode_count(count, prev))
-  end
-
-  defp encode_count(0, _), do: ""
-  defp encode_count(count, char), do: "#{count}#{char}"
-
-  @spec decode(string) :: String.t
+  @spec decode(str :: String.t) :: String.t
   def decode(string) do
     decode(string, "")
   end
