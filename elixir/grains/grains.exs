@@ -12,6 +12,8 @@ defmodule Grains do
   """
   @spec total :: pos_integer
   def total do
-    1..64 |> Enum.reduce(fn(x, acc) -> acc + square(x) end)
+    powers_of_two |> Enum.take(64) |> Enum.sum
   end
+
+  defp powers_of_two, do: Stream.resource(fn -> 1 end, fn i -> {[i], i * 2} end, fn _ -> nil end)
 end
