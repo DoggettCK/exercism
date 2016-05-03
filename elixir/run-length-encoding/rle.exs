@@ -16,19 +16,12 @@ defmodule RunLengthEncoder do
 
   @spec decode(str :: String.t) :: String.t
   def decode(string) do
-    decode(string, "")
+    Regex.scan(~r/(\d+)(\w)/, string, capture: :all_but_first)
+    |> Enum.map(&multiply_string/1)
+    |> Enum.join
   end
 
-  defp decode("", result), do: result
-  
-  defp decode(:error, _), do: "Invalid string"
-  defp decode({count, <<char::binary-size(1)>> <> rest}, result), do: decode(rest, result <> decode_count(count, char))
-  defp decode(string, result) when is_binary(string), do: decode(Integer.parse(string), result)
-
-  defp decode_count(0, _), do: ""
-  defp decode_count(count, char) do
-    Stream.cycle([char])
-    |> Enum.take(count)
-    |> Enum.join
+  defp multiply_string([count | char]) do
+    Stream.cycle(char) |> Enum.take(String.to_integer(count))
   end
 end
