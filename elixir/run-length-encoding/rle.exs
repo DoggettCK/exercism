@@ -11,8 +11,7 @@ defmodule RunLengthEncoder do
     string
     |> String.to_char_list
     |> Enum.chunk_by(fn x -> x end)
-    |> Enum.map(fn x -> {length(x), Enum.take(x, 1)} end)
-    |> Enum.reduce("", fn {count, char}, acc -> acc <> "#{count}#{char}" end)
+    |> Enum.reduce("", fn str, acc -> acc <> "#{length(str)}#{Enum.take(str, 1)}" end)
   end
 
   @spec decode(str :: String.t) :: String.t
