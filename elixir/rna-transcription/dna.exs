@@ -9,17 +9,12 @@ defmodule DNA do
   """
   @spec to_rna([char]) :: [char]
   def to_rna(dna) do
-    dna |> Enum.map(&transcribe/1)
+    Enum.map(dna, &transcribe/1)
   end
 
-  for {dna, rna} <- %{
-    ?G => ?C,
-    ?C => ?G,
-    ?T => ?A,
-    ?A => ?U
-  } do
+  for {dna, rna} <- %{?G => ?C, ?C => ?G, ?T => ?A, ?A => ?U} do
     defp transcribe(unquote(dna)), do: unquote(rna)
   end
 
-  defp transcribe(blah), do: raise ArgumentError
+  defp transcribe(_), do: raise ArgumentError
 end
