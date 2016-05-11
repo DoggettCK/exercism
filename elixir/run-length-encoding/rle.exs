@@ -17,11 +17,7 @@ defmodule RunLengthEncoder do
   @spec decode(str :: String.t) :: String.t
   def decode(string) do
     Regex.scan(~r/(\d+)(\w)/, string, capture: :all_but_first)
-    |> Enum.map(&multiply_string/1)
+    |> Enum.map(fn [count, char] -> String.duplicate(char, String.to_integer(count)) end)
     |> Enum.join
-  end
-
-  defp multiply_string([count | char]) do
-    Stream.cycle(char) |> Enum.take(String.to_integer(count))
   end
 end
