@@ -1,74 +1,35 @@
 defmodule Phone do
   @invalid "0000000000"
 
-  @doc """
-  Remove formatting from a phone number.
+  @numbers ~w(0 1 2 3 4 5 6 7 8 9)
+  @valid_non_numeric ["+", "-", " ", ".", "(", ")"]
 
-  Returns "0000000000" if phone number is not valid
-  (10 digits or "1" followed by 10 digits)
-
-  ## Examples
-
-  iex> Phone.number("123-456-7890")
-  "1234567890"
-
-  iex> Phone.number("+1 (303) 555-1212")
-  "3035551212"
-
-  iex> Phone.number("867.5309")
-  "0000000000"
-  """
   @spec number(String.t) :: String.t
   def number(raw) do
-    raw
-    |> String.replace(~r/\W/, "")
-    |> validate
+    clean(raw)
   end
 
-  defp validate(<< "1", rest::binary-size(10) >>), do: rest
-  defp validate(<< rest::binary-size(10) >>), do: rest
-  defp validate(_), do: @invalid
+  defp clean(raw), do: clean(raw, "", 0)
+  defp clean(<<>>, "1" <> result, 11), do: result
+  defp clean(<<>>, result, 10), do: result
+  defp clean(<<>>, _, _), do: @invalid
+  
+  for num <- @numbers do
+    defp clean(unquote(num) <> rest, result, num_count), do: clean(rest, result <> "#{unquote(num)}", num_count + 1)
+  end
 
-  @doc """
-  Extract the area code from a phone number
+  for char <- @valid_non_numeric do
+    defp clean(unquote(char) <> rest, result, num_count), do: clean(rest, result, num_count)
+  end
 
-  Returns the first three digits from a phone number,
-  ignoring long distance indicator
+  defp clean(_raw, _result, _num_count), do: @invalid
 
-  ## Examples
-
-  iex> Phone.area_code("123-456-7890")
-  "123"
-
-  iex> Phone.area_code("+1 (303) 555-1212")
-  "303"
-
-  iex> Phone.area_code("867.5309")
-  "000"
-  """
   @spec area_code(String.t) :: String.t
   def area_code(raw) do
     {area, _, _} = chunks(raw)
     area
   end
 
-  @doc """
-  Pretty print a phone number
-
-  Wraps the area code in parentheses and separates
-  exchange and subscriber number with a dash.
-
-  ## Examples
-
-  iex> Phone.pretty("123-456-7890")
-  "(123) 456-7890"
-
-  iex> Phone.pretty("+1 (303) 555-1212")
-  "(303) 555-1212"
-
-  iex> Phone.pretty("867.5309")
-  "(000) 000-0000"
-  """
   @spec pretty(String.t) :: String.t
   def pretty(raw) do
     {area, prefix, suffix} = chunks(raw)

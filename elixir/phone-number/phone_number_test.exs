@@ -10,6 +10,10 @@ ExUnit.configure exclude: :pending, trace: true
 defmodule PhoneTest do
   use ExUnit.Case
 
+  test "invalid when only letters" do
+    assert Phone.number("aaabbbcccc") == "0000000000"
+  end
+
   test "cleans number" do
     assert Phone.number("(123) 456-7890") == "1234567890"
   end
