@@ -69,5 +69,9 @@ defmodule TriangleTest do
   test "triangles violating triangle inequality are illegal 3" do
     assert Triangle.kind(7, 3, 2) == { :error, "side lengths violate triangle inequality" }
   end
+
+  test "only numbers allowed" do
+    assert Triangle.kind("not", "a", "triangle") == { :error, "side lengths must be numbers" }
+  end
 end
 
