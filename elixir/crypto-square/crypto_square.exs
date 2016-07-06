@@ -23,12 +23,5 @@ defmodule CryptoSquare do
 
   defp clean(str), do: str |> String.downcase |> String.replace(~r{[^a-z0-9]}, "")
 
-  defp columns(n) do
-    rows = :math.sqrt(n) |> Float.floor |> round
-
-    columns(n, rows, rows * rows)
-  end
-
-  defp columns(n, rows, n), do: rows
-  defp columns(_, rows, _), do: rows + 1
+  defp columns(n), do: :math.sqrt(n) |> Float.ceil |> round
 end
