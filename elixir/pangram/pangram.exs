@@ -20,8 +20,7 @@ defmodule Pangram do
     |> String.replace(~r{[^a-z]}, "") 
     |> String.graphemes
     |> Enum.sort
-    |> Enum.chunk_by(&(&1))
-    |> Enum.map(&(&1 |> hd))
+    |> Enum.uniq
     |> Enum.join
     |> Kernel.==(@alphabet)
   end
