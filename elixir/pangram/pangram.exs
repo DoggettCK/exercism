@@ -11,8 +11,6 @@ defmodule Pangram do
       true
 
   """
-  @alphabet ?a..?z |> Enum.to_list |> to_string
-
   @spec pangram?(String.t) :: boolean
   def pangram?(sentence) do
     26 == sentence
