@@ -15,13 +15,11 @@ defmodule Pangram do
 
   @spec pangram?(String.t) :: boolean
   def pangram?(sentence) do
-    sentence
+    26 == sentence
     |> String.downcase
     |> String.replace(~r{[^a-z]}, "") 
     |> String.graphemes
-    |> Enum.sort
     |> Enum.uniq
-    |> Enum.join
-    |> Kernel.==(@alphabet)
+    |> length
   end
 end
