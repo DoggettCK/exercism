@@ -26,9 +26,11 @@ defmodule PerfectNumbers do
     |> Enum.sum
   end
 
-  defp factors(number), do: factors(number, div(number, 2))
-  defp factors(1, _), do: [1]
-  defp factors(_, 1), do: [1]
-  defp factors(number, i) when rem(number, i) == 0, do: [i | factors(number, i-1)]
-  defp factors(number, i), do: factors(number, i-1)
+  def factors(number), do: factors(number, 2, number, [1, number])
+  def factors(_number, min, max, results) when min >= max, do: results |> Enum.sort |> Enum.uniq
+  def factors(number, min, _max, results) when rem(number, min) == 0 do
+    new_high = div(number, min)
+    factors(number, min + 1, new_high, [min, new_high | results])
+  end
+  def factors(number, min, max, results), do: factors(number, min + 1, max, results)
 end
