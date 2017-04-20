@@ -21,7 +21,7 @@ defmodule SecretHandshake do
   def commands(code) do
     @codes
     |> Enum.with_index
-    |> Enum.map(fn {command, i} -> { command, 2 <<< (i-1) } end)
+    |> Enum.map(fn {command, i} -> { command, 1 <<< i } end)
     |> decode_commands(code, [])
   end
 
