@@ -36,7 +36,6 @@ $ elixir bob_test.exs
 
 (Replace `bob_test.exs` with the name of the test file.)
 
-
 ### Pending tests
 
 In the test suites, all but the first test have been skipped.
@@ -65,4 +64,8 @@ see the [help page](http://exercism.io/languages/elixir).
 
 ## Source
 
-The Calculating DNA Nucleotides_problem at Rosalind [view source](http://rosalind.info/problems/dna/)
+The Calculating DNA Nucleotides_problem at Rosalind [http://rosalind.info/problems/dna/](http://rosalind.info/problems/dna/)
+
+## Submitting Incomplete Problems
+It's possible to submit an incomplete solution so you can see how others have completed the exercise.
+
