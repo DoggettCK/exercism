@@ -21,10 +21,11 @@ defmodule Dominoes do
     |> permutations()
     |> Enum.reduce([], &reduce_permutation/2)
     |> List.flatten()
+    |> Enum.uniq()
   end
 
   defp reduce_permutation([head | tail], results) do
-    [chain(tail, [], head, nil) |> Enum.uniq() | results]
+    [chain(tail, [], head, nil) | results]
   end
 
   # Nothing left to process, ends match, full chain
