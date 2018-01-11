@@ -15,7 +15,7 @@ defmodule TransposeTest do
     assert Transpose.transpose(input) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "two characters in a row" do
     input= "AB"
     expected =
@@ -25,7 +25,7 @@ defmodule TransposeTest do
     assert Transpose.transpose(input) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "two characters in one column" do
     input=
       "A\n" <>
@@ -36,7 +36,7 @@ defmodule TransposeTest do
     assert Transpose.transpose(input) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "single line" do
     input = "Single line."
 
@@ -57,7 +57,7 @@ defmodule TransposeTest do
       assert Transpose.transpose(input) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "first line longer than second line" do
     input = "The fourth line.\n" <>
             "The fifth line."
@@ -83,7 +83,7 @@ defmodule TransposeTest do
       assert Transpose.transpose(input) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "second line longer than first line" do
     input = "The first line.\n" <>
             "The second line."
@@ -109,7 +109,7 @@ defmodule TransposeTest do
       assert Transpose.transpose(input) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "square" do
     matrix =
       "HEART\n" <>
@@ -128,7 +128,7 @@ defmodule TransposeTest do
     assert Transpose.transpose(matrix) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "rectangle" do
     matrix =
       "FRACTURE\n" <>
@@ -149,7 +149,7 @@ defmodule TransposeTest do
     assert Transpose.transpose(matrix) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "triangle" do
     matrix =
       "T\n" <>
@@ -170,7 +170,7 @@ defmodule TransposeTest do
     assert Transpose.transpose(matrix) == expected
   end
 
-  @tag :pending
+  #@tag :pending
   test "many lines" do
     matrix =
       "Chor. Two households, both alike in dignity,\n" <>
