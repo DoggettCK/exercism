@@ -21,7 +21,6 @@ defmodule Dominoes do
     |> permutations()
     |> Enum.reduce([], &reduce_permutation/2)
     |> List.flatten()
-    |> Enum.uniq()
   end
 
   defp reduce_permutation([head | tail], results) do
